@@ -1,0 +1,18 @@
+This file is a README file.
+
+It contains important information about the project.
+
+Please read it carefully.
+
+Thank you!
+
+This system requires a data set to function properly. I will include a link to download the data set below. 
+
+https://drive.google.com/file/d/1tUrtDEqP0t_ALBFEDBufzbZQyJkeiuBa/view?usp=sharing
+https://www.kaggle.com/datasets/rdoume/beerreviews
+
+The data set must be named "beer_reviews.csv" and placed in the "Data" folder in the root directory of the project.
+
+
+
+// End of README
