@@ -69,13 +69,13 @@ title_label = Label(root, text="BeerBot 3000", font=("Helvetica", 24))
 title_label.pack(pady=10)
 
 def update_listbox(data, listbox):
-    """Clears and updates the listbox with new data."""
+    ## Clears and updates the listbox with new data.
     listbox.delete(0, END)
     for item in data:
         listbox.insert(END, item)
 
 def check_input(event, entry_var, data_list, listbox):
-    """Filters data_list based on entry content and updates listbox."""
+    ## Filters data_list based on entry content and updates listbox.
     typed_text = entry_var.get().lower()
     if not typed_text:
         filtered_data = data_list
@@ -84,14 +84,14 @@ def check_input(event, entry_var, data_list, listbox):
     update_listbox(filtered_data, listbox)
 
 def fill_entry(event, entry_var, listbox):
-    """Fills the entry with the selected listbox item."""
+    ## Fills the entry with the selected listbox item.
     if listbox.curselection():  # Check if an item is actually selected
         selected_item = listbox.get(ANCHOR)
         entry_var.set(selected_item)
         listbox.delete(0, END) # Optionally clear suggestions after selection
 
 def create_autocomplete_search_bar(root, data_list):
-    """Creates an autocompleting search bar."""
+    ## Creates an autocompleting search bar.
     entry_var = tk.StringVar()
 
     entry = tk.Entry(root, textvariable=entry_var, font=("Helvetica", 16))
