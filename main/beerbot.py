@@ -35,12 +35,19 @@ recommender.fit(encoded_beer_types)  # This statement fits the nearest neighbor 
 
 ## The following are test statements used to ensure the function of the recommender system. The final output will take these values from the user.
 
-beer_index = 13
+## beer_index = 13
 
-num_recs = 5
+## num_recs = 5
 
-distances, indices = recommender.kneighbors(encoded_beer_types[beer_index].reshape(1, -1), n_neighbors=num_recs)
+## distances, indices = recommender.kneighbors(encoded_beer_types[beer_index].reshape(1, -1), n_neighbors=num_recs)
 
-print(f"Recommendations for {beers.iloc[beer_index]['beer_name']} ({beers.iloc[beer_index]['beer_style']}):")
-for idx in indices[0]:
-    print(f"- {beers.iloc[idx]['beer_name']} ({beers.iloc[idx]['beer_style']}) from {beers.iloc[idx]['brewery_name']} \n")
+## print(f"Recommendations for {beers.iloc[beer_index]['beer_name']} ({beers.iloc[beer_index]['beer_style']}):")
+## for idx in indices[0]:
+##    print(f"- {beers.iloc[idx]['beer_name']} ({beers.iloc[idx]['beer_style']}) from {beers.iloc[idx]['brewery_name']} \n")
+
+def get_beer_recommendations(beer_index): ## This function takes in a beer index and the number of recommendations to return a list of strings with beer information for each recommendation.
+    distances, indices = recommender.kneighbors(encoded_beer_types[beer_index].reshape(1, -1), n_neighbors=5) ## UI will fetch these values from the user.
+    recommendations = []
+    for idx in indices[0]:
+        recommendations.append(f"- {beers.iloc[idx]['beer_name']} ({beers.iloc[idx]['beer_style']}) from {beers.iloc[idx]['brewery_name']}")
+    return recommendations
