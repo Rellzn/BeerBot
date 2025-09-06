@@ -62,11 +62,15 @@ root = Tk()
 
 ## Window properties
 root.title("BeerBot 3000")
-root.geometry("600x400")
+root.geometry("800x500")
 
 ## Title label
 title_label = Label(root, text="BeerBot 3000", font=("Helvetica", 24))
 title_label.pack(pady=10)
+
+## Subtitle label
+subtitle_label = Label(root, text="Find your next favorite beer! \n Input your favorite here!", font=("Helvetica", 16))
+subtitle_label.pack(pady=5)
 
 def update_listbox(data, listbox):
     ## Clears and updates the listbox with new data.
