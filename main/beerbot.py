@@ -2,6 +2,7 @@
 
 import pandas as pd
 import sklearn
+from tkinter import *
 
 ## Loading the dataset
 beers = pd.read_csv('data/beer_reviews.csv')
@@ -51,3 +52,20 @@ def get_beer_recommendations(beer_index): ## This function takes in a beer index
     for idx in indices[0]:
         recommendations.append(f"- {beers.iloc[idx]['beer_name']} ({beers.iloc[idx]['beer_style']}) from {beers.iloc[idx]['brewery_name']}")
     return recommendations
+
+
+## Creating the GUI
+
+## Main window
+root = Tk()
+
+## Window properties
+root.title("BeerBot 3000")
+root.geometry("600x400")
+
+## Title label
+title_label = Label(root, text="BeerBot 3000", font=("Helvetica", 24))
+title_label.pack(pady=10)
+
+##Start the event loop
+root.mainloop()
