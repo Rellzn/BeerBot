@@ -54,6 +54,14 @@ def get_beer_recommendations(beer_index): ## This function takes in a beer index
         recommendations.append(f"- {beers.iloc[idx]['beer_name']} ({beers.iloc[idx]['beer_style']}) from {beers.iloc[idx]['brewery_name']}")
     return recommendations
 
+def find_beer_index(beer_name): ## This function takes in a beer name and returns the index of that beer in the dataset.
+    beer_row = beers[beers['beer_name'].str.lower() == beer_name.lower()]
+    if not beer_row.empty:
+        return beer_row.index[0]
+    else:
+        return None
+
+## print(find_beer_index("Sierra Nevada Pale Ale"))  ## Test statement to ensure the function works correctly.
 
 ## Creating the GUI
 
