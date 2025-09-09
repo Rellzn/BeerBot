@@ -8,9 +8,11 @@ from tkinter import *
 ## Loading the dataset
 beers = pd.read_csv('data/beer_reviews.csv')
 
-beers = beers.drop_duplicates(subset=['beer_name'])  # Dropping duplicate beers by name to ensure data quality
+beers = beers.drop_duplicates(subset=['beer_name'])  ## Dropping duplicate beers by name to ensure data quality
 
-beers = beers.dropna(subset=['beer_style'])  # Dropping rows where 'beer_style' is NaN
+beers = beers.dropna(subset=['beer_style'])  ## Dropping rows where 'beer_style' is NaN
+
+beers = beers.reset_index(drop=True) ## Resetting the dataset to allow for the lookup functions to work
 
 ## Test statement displaying the first few rows of the dataset to verify it loaded correctly
 ## print(beers.head())
@@ -31,7 +33,7 @@ encoded_beer_types = encoder.fit_transform(beers[['beer_style']])
 ## We will be using a nearest neighbor algorithm to find similar beers based on their attributes.
 from sklearn.neighbors import NearestNeighbors
 
-recommender = NearestNeighbors(metric='euclidean')
+recommender = NearestNeighbors(metric='cosine')
 
 recommender.fit(encoded_beer_types)  # This statement fits the nearest neighbor model to the encoded beer types.
 
@@ -70,7 +72,7 @@ root = Tk()
 
 ## Window properties
 root.title("BeerBot 3000")
-root.geometry("800x500")
+root.geometry("1000x700")
 
 ## Title label
 title_label = Label(root, text="BeerBot 3000", font=("Helvetica", 24))
@@ -112,14 +114,46 @@ def create_autocomplete_search_bar(root, data_list):
     listbox = tk.Listbox(root, width=40, height=8, font=("Helvetica", 14))
     listbox.pack(pady=5)
 
-    # Initial population of the listbox
+    ## Initial population of the listbox
     update_listbox(data_list, listbox)
 
-    # Bind events
+    ## Bind events
     entry.bind("<KeyRelease>", lambda e: check_input(e, entry_var, data_list, listbox))
     listbox.bind("<<ListboxSelect>>", lambda e: fill_entry(e, entry_var, listbox))
 
 create_autocomplete_search_bar(root, beers['beer_name'].tolist())
 
-##Start the event loop
+## Recommendation button function
+def on_recommend():
+    # Get the text from the Entry widget using its StringVar
+    # Find the Entry widget and its associated StringVar
+    for widget in root.winfo_children():
+        if isinstance(widget, tk.Entry):
+            entry_widget = widget
+            break
+    else:
+        entry_widget = None
+
+    if entry_widget is not None:
+        entry_var_name = entry_widget.cget('textvariable')
+        beer_name = root.getvar(entry_var_name)
+    else:
+        beer_name = ""
+
+    beer_index = find_beer_index(beer_name)
+    if beer_index is not None:
+        recommendations = get_beer_recommendations(beer_index)
+        update_listbox(recommendations, recommendation_listbox)
+    else:
+        update_listbox(["Beer not found. Please try again."], recommendation_listbox)
+
+recommendation_button = tk.Button(root, text="Get Recommendations", command=on_recommend, font=("Helvetica", 16))
+recommendation_button.pack(pady=10)
+
+recommendation_listbox = tk.Listbox(root, width=80, height=10, font=("Helvetica", 14)) ## This listbox will display the recommendations.
+recommendation_listbox.pack(pady=10)
+
+
+
+## Start the event loop
 root.mainloop()
