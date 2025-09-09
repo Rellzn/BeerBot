@@ -13,6 +13,22 @@ https://www.kaggle.com/datasets/rdoume/beerreviews
 
 The data set must be named "beer_reviews.csv" and placed in the "Data" folder in the root directory of the project.
 
+This program was built in Python 3.13, and I cannot guarantee that it will work in other versions of Python.'
 
+To use this program, you will need to install the following libraries:
+- pandas
+- sklearn
+
+You can install these libraries using pip.
+
+To use the program, simply run the beerbot.py file.
+
+From there, you will have a search bar that you can use to search for beers.
+
+Once you click on the search button, you will be given a list of beers that match your search query.
+
+I would recommend searching online to find more information about the recommended beers, and to find out where you can purchase them.
+
+Enjoy!
 
 // End of README
