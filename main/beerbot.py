@@ -40,7 +40,7 @@ encoded_beer_types = encoder.fit_transform(beers[['beer_style']])
 ## We will be using a nearest neighbor algorithm to find similar beers based on their attributes.
 from sklearn.neighbors import NearestNeighbors
 
-recommender = NearestNeighbors(metric='euclidean')
+recommender = NearestNeighbors(metric='manhattan')
 
 recommender.fit(encoded_beer_types)  # This statement fits the nearest neighbor model to the encoded beer types.
 
