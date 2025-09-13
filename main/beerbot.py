@@ -4,6 +4,7 @@ import pandas as pd
 import sklearn
 import tkinter as tk
 from tkinter import *
+from tkinter import messagebox
 
 ## Loading the dataset
 beers = pd.read_csv('data/beer_reviews.csv')
@@ -86,7 +87,7 @@ title_label = Label(root, text="BeerBot 3000", font=("Helvetica", 24))
 title_label.pack(pady=10)
 
 ## Subtitle label
-subtitle_label = Label(root, text="Find your next favorite beer! \n Input your favorite here!", font=("Helvetica", 16))
+subtitle_label = Label(root, text="Find your next favorite beer! \nInput your favorite here!", font=("Helvetica", 16))
 subtitle_label.pack(pady=5)
 
 def update_listbox(data, listbox):
@@ -97,7 +98,13 @@ def update_listbox(data, listbox):
 
 def check_input(event, entry_var, data_list, listbox):
     ## Filters data_list based on entry content and updates listbox.
-    typed_text = entry_var.get().lower()
+    typed_text = entry_var.get()
+    if len(typed_text) > 100:
+        entry_var.set("")  ## Discard the input
+        update_listbox([], listbox)
+        tk.messagebox.showerror("Input Error", "Input exceeds 100 characters. Please enter a shorter name.")
+        return
+    typed_text = typed_text.lower()
     if not typed_text:
         filtered_data = data_list
     else:
