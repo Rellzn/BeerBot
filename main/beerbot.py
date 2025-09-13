@@ -8,11 +8,18 @@ from tkinter import *
 ## Loading the dataset
 beers = pd.read_csv('data/beer_reviews.csv')
 
-beers = beers.drop_duplicates(subset=['beer_name'])  ## Dropping duplicate beers by name to ensure data quality
+## Group by beer_name and aggregate: take the first non-null beer_style and brewery_name, and average review_overall
+beers = beers.groupby('beer_name', as_index=False).agg({
+    'beer_style': 'first',
+    'brewery_name': 'first',
+    'review_overall': 'mean'
+})
 
-beers = beers.dropna(subset=['beer_style'])  ## Dropping rows where 'beer_style' is NaN
+## Drop rows where 'beer_style' is NaN
+beers = beers.dropna(subset=['beer_style'])
 
-beers = beers.reset_index(drop=True) ## Resetting the dataset to allow for the lookup functions to work
+## Reset the dataset index
+beers = beers.reset_index(drop=True)
 
 ## Test statement displaying the first few rows of the dataset to verify it loaded correctly
 ## print(beers.head())
@@ -33,7 +40,7 @@ encoded_beer_types = encoder.fit_transform(beers[['beer_style']])
 ## We will be using a nearest neighbor algorithm to find similar beers based on their attributes.
 from sklearn.neighbors import NearestNeighbors
 
-recommender = NearestNeighbors(metric='cosine')
+recommender = NearestNeighbors(metric='euclidean')
 
 recommender.fit(encoded_beer_types)  # This statement fits the nearest neighbor model to the encoded beer types.
 
